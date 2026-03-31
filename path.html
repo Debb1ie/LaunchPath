@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaunchPath — Your Career Starts Here</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020408;
+  --bg2:#060a12;
+  --bg3:#0a1020;
+  --card:#0d1525;
+  --card2:#111c30;
+  --border:rgba(59,130,246,0.1);
+  --border2:rgba(59,130,246,0.22);
+  --border3:rgba(59,130,246,0.4);
+  --text:#e8edf5;
+  --muted:#5a6a82;
+  --muted2:#8899b0;
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --blue3:#93c5fd;
+  --cyan:#06b6d4;
+  --white:#ffffff;
+  --glow:rgba(59,130,246,0.15);
+  --glow2:rgba(6,182,212,0.1);
+}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;cursor:default}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:rgba(2,4,8,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.3s}
+nav.scrolled{background:rgba(2,4,8,0.97);border-bottom-color:var(--border2)}
+.logo{font-family:'Cabinet Grotesk',sans-serif;font-size:1.2rem;font-weight:900;color:var(--white);text-decoration:none;letter-spacing:-0.03em;display:flex;align-items:center;gap:8px}
+.logo-mark{width:30px;height:30px;background:linear-gradient(135deg,var(--blue),var(--cyan));border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:16px;height:16px;fill:white}
+.logo span{color:var(--blue2)}
+.nav-links{display:flex;gap:0;list-style:none}
+.nav-links a{color:var(--muted2);text-decoration:none;font-size:0.875rem;font-weight:500;padding:8px 16px;border-radius:6px;transition:all 0.2s;position:relative}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--blue2)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-ghost{background:transparent;color:var(--muted2);border:1px solid var(--border2);padding:7px 16px;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.nav-ghost:hover{color:var(--text);border-color:var(--border3)}
+.nav-cta{background:var(--blue);color:var(--white);border:none;padding:8px 18px;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 0 20px rgba(59,130,246,0.3)}
+.nav-cta:hover{background:var(--blue2);box-shadow:0 0 30px rgba(59,130,246,0.5);transform:translateY(-1px)}
+
+/* ─── MOBILE NAV TOGGLE ─── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none}
+.nav-hamburger span{width:22px;height:2px;background:var(--muted2);border-radius:2px;transition:all 0.3s;display:block}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,10,18,0.98);border-bottom:1px solid var(--border2);z-index:199;padding:1rem 1.5rem 1.5rem;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--muted2);text-decoration:none;font-size:0.95rem;font-weight:500;padding:10px 12px;border-radius:8px;transition:all 0.2s}
+.mobile-menu a:hover{color:var(--text);background:var(--card)}
+.mobile-menu .mob-cta{margin-top:8px;background:var(--blue);color:white;border:none;padding:12px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-weight:600;cursor:pointer;font-size:0.95rem}
+
+/* ─── HERO ─── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.05) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at center,black,transparent)}
+.hero-glow1{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,0.12),transparent 70%);top:-200px;left:50%;transform:translateX(-50%);pointer-events:none}
+.hero-glow2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(6,182,212,0.08),transparent 70%);bottom:-100px;right:5%;pointer-events:none}
+.hero-content{position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);padding:6px 14px;border-radius:100px;font-size:0.75rem;font-weight:600;color:var(--blue3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:2rem;animation:fadeUp 0.6s ease both}
+.status-dot{width:7px;height:7px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan);animation:pulse 2.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.hero h1{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(2.8rem,7.5vw,5.5rem);font-weight:900;line-height:1.02;letter-spacing:-0.04em;max-width:900px;margin:0 auto 1.5rem;animation:fadeUp 0.7s 0.1s ease both}
+.hero h1 .t-white{color:var(--white)}
+.hero h1 .t-blue{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--muted2);max-width:500px;line-height:1.75;margin:0 auto 2.8rem;font-weight:400;animation:fadeUp 0.7s 0.2s ease both}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.7s 0.3s ease both}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:var(--white);border:none;padding:14px 30px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 30px rgba(59,130,246,0.35);display:flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(59,130,246,0.55)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2);padding:14px 30px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:1rem;font-weight:500;cursor:pointer;transition:all 0.25s;display:flex;align-items:center;gap:8px}
+.btn-outline:hover{background:var(--card);border-color:var(--border3)}
+.hero-stats{display:flex;gap:4rem;margin-top:4.5rem;padding-top:3rem;border-top:1px solid var(--border);animation:fadeUp 0.7s 0.4s ease both}
+.hstat strong{display:block;font-family:'Cabinet Grotesk',sans-serif;font-size:2.2rem;font-weight:900;color:var(--white);letter-spacing:-0.04em}
+.hstat span{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.09em;font-weight:500}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── SECTION BASICS ─── */
+section{padding:5.5rem 2rem;position:relative}
+.container{max-width:1120px;margin:0 auto}
+.s-eyebrow{font-size:0.73rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--blue2);font-weight:600;margin-bottom:0.6rem;display:flex;align-items:center;gap:6px}
+.s-eyebrow::before{content:'';width:16px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:2px}
+.s-title{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:var(--white);line-height:1.1;letter-spacing:-0.03em;margin-bottom:0.8rem}
+.s-desc{font-size:0.98rem;color:var(--muted2);max-width:480px;line-height:1.75}
+.s-header{margin-bottom:3rem}
+
+/* ─── PATHS ─── */
+#paths{background:var(--bg2)}
+#paths::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border3),transparent)}
+.paths-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.path-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.path-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,0.05),transparent);opacity:0;transition:opacity 0.3s}
+.path-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.path-card:hover::after{opacity:1}
+.path-card.selected{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue),0 0 30px rgba(59,130,246,0.2)}
+.path-card.selected::after{opacity:1}
+.path-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.15)}
+.path-icon svg{width:22px;height:22px}
+.path-name{font-family:'Cabinet Grotesk',sans-serif;font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:5px;letter-spacing:-0.02em}
+.path-desc{font-size:0.84rem;color:var(--muted2);line-height:1.55;margin-bottom:1rem}
+.ptags{display:flex;gap:6px;flex-wrap:wrap}
+.ptag{font-size:0.7rem;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);font-weight:500}
+.ptag.hot{background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)}
+.path-select-btn{position:absolute;top:1.1rem;right:1.1rem;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.path-card.selected .path-select-btn{background:var(--blue);border-color:var(--blue)}
+.path-select-btn svg{width:12px;height:12px;stroke:var(--muted);fill:none}
+.path-card.selected .path-select-btn svg{stroke:white}
+
+/* ─── ROADMAP ─── */
+#roadmap{background:var(--bg)}
+.rm-wrap{margin-top:1rem;display:none;animation:fadeUp 0.5s ease}
+.rm-wrap.on{display:block}
+.rm-header{display:flex;align-items:center;gap:14px;margin-bottom:0;padding:1.5rem 1.75rem;background:var(--card);border:1px solid var(--border2);border-radius:16px 16px 0 0;border-bottom:none}
+.rm-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(6,182,212,0.15));border:1px solid var(--border2);display:flex;align-items:center;justify-content:center}
+.rm-icon svg{width:20px;height:20px}
+.rm-title{font-family:'Cabinet Grotesk',sans-serif;font-size:1.2rem;font-weight:800;color:var(--white)}
+.rm-sub{font-size:0.82rem;color:var(--muted);margin-top:2px}
+.rm-progress-bar{height:3px;background:var(--border);margin:0}
+.rm-progress-fill{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%;transition:width 0.6s ease;border-radius:0 0 2px 2px}
+.rm-body{background:var(--card);border:1px solid var(--border2);border-top:none;border-radius:0 0 16px 16px;overflow:hidden}
+.step-row{display:flex;gap:1.5rem;align-items:flex-start;padding:1.5rem 1.75rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.2s;position:relative}
+.step-row:last-child{border-bottom:none}
+.step-row:hover{background:rgba(59,130,246,0.04)}
+.step-row.completed{background:rgba(59,130,246,0.03)}
+.step-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-num{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;font-family:'Cabinet Grotesk',sans-serif;transition:all 0.3s}
+.step-num.active{background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;box-shadow:0 0 20px rgba(59,130,246,0.5)}
+.step-num.done{background:rgba(59,130,246,0.15);color:var(--blue2);border:1.5px solid var(--blue)}
+.step-num.todo{background:var(--bg3);color:var(--muted);border:1.5px solid var(--border2)}
+.step-check{position:absolute;left:1.75rem;top:1.5rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.step-line{width:1.5px;flex:1;background:linear-gradient(180deg,var(--border2),var(--border));margin:5px 0;min-height:24px}
+.step-line.done{background:linear-gradient(180deg,var(--blue),var(--border2))}
+.step-body{flex:1;padding-top:3px}
+.step-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px}
+.step-title{font-family:'Cabinet Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--white);letter-spacing:-0.01em}
+.step-row.completed .step-title{color:var(--muted2)}
+.tbadge{font-size:0.7rem;padding:3px 10px;border-radius:100px;background:rgba(6,182,212,0.1);color:var(--cyan);border:1px solid rgba(6,182,212,0.2);white-space:nowrap;flex-shrink:0;font-weight:600}
+.step-desc{font-size:0.85rem;color:var(--muted2);line-height:1.65;margin-bottom:10px}
+.step-skills{display:flex;gap:6px;flex-wrap:wrap}
+.spill{font-size:0.7rem;padding:3px 10px;border-radius:100px;background:rgba(59,130,246,0.08);color:var(--blue3);border:1px solid rgba(59,130,246,0.15);font-weight:500}
+.mark-done-btn{margin-top:10px;background:rgba(59,130,246,0.1);color:var(--blue3);border:1px solid rgba(59,130,246,0.2);padding:6px 14px;border-radius:7px;font-family:'Instrument Sans',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.mark-done-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}
+.mark-done-btn svg{width:13px;height:13px}
+
+/* ─── SKILLS/TOOLS ─── */
+#tools{background:var(--bg2)}
+#tools::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border3),transparent)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.tool-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all 0.25s;cursor:pointer;position:relative;overflow:hidden}
+.tool-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 10px 36px rgba(0,0,0,0.4)}
+.t-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;border:1px solid}
+.t-icon svg{width:20px;height:20px}
+.t-icon.blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.2)}
+.t-icon.cyan{background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.18)}
+.t-icon.white{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.12)}
+.t-name{font-family:'Cabinet Grotesk',sans-serif;font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:6px;letter-spacing:-0.02em}
+.t-desc{font-size:0.84rem;color:var(--muted2);line-height:1.6;margin-bottom:1.1rem}
+.prog-row{display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);margin-bottom:5px;font-weight:500}
+.prog-out{height:3px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden}
+.prog-in{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width 0.5s ease}
+.tool-action{margin-top:1.1rem;background:rgba(59,130,246,0.08);color:var(--blue3);border:1px solid rgba(59,130,246,0.15);padding:8px 14px;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:center}
+.tool-action:hover{background:var(--blue);color:white;border-color:var(--blue)}
+.tool-action svg{width:14px;height:14px}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{padding:1.5rem 1.75rem 0;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.modal-title{font-family:'Cabinet Grotesk',sans-serif;font-size:1.3rem;font-weight:800;color:var(--white);letter-spacing:-0.02em}
+.modal-sub{font-size:0.85rem;color:var(--muted2);margin-top:3px}
+.modal-close{background:var(--card);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all 0.2s}
+.modal-close:hover{border-color:var(--border2);background:var(--card2)}
+.modal-close svg{width:14px;height:14px;stroke:var(--muted);fill:none}
+.modal-body{padding:1.5rem 1.75rem}
+.form-group{margin-bottom:1.2rem}
+.form-label{display:block;font-size:0.82rem;font-weight:600;color:var(--muted2);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
+.form-input,.form-textarea,.form-select{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'Instrument Sans',sans-serif;font-size:0.9rem;transition:border-color 0.2s;outline:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+.form-textarea{min-height:90px;resize:vertical;line-height:1.6}
+.form-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%235a6a82' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-footer{padding:1rem 1.75rem 1.5rem;display:flex;gap:10px;border-top:1px solid var(--border)}
+.modal-cancel{flex:1;background:transparent;color:var(--muted2);border:1px solid var(--border2);padding:10px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.modal-cancel:hover{border-color:var(--border3);color:var(--text)}
+.modal-submit{flex:2;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;padding:10px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(59,130,246,0.35)}
+.modal-submit:hover{box-shadow:0 6px 28px rgba(59,130,246,0.55);transform:translateY(-1px)}
+.modal-success{text-align:center;padding:2rem;display:none}
+.modal-success.on{display:block}
+.success-icon{width:60px;height:60px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.success-icon svg{width:26px;height:26px}
+
+/* ─── JOBS ─── */
+#jobs{background:var(--bg)}
+.jobs-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-family:'Instrument Sans',sans-serif;font-size:0.82rem;font-weight:600;color:var(--muted2);cursor:pointer;transition:all 0.2s}
+.filter-btn:hover{border-color:var(--border2);color:var(--text)}
+.filter-btn.active{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:var(--blue3)}
+.jobs-list{display:flex;flex-direction:column;gap:10px}
+.job-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1.25rem;transition:all 0.22s;cursor:pointer;position:relative}
+.job-card:hover{border-color:var(--border2);transform:translateX(5px);box-shadow:4px 0 0 var(--blue) inset}
+.j-logo{width:46px;height:46px;border-radius:11px;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.j-logo svg{width:22px;height:22px}
+.j-info{flex:1;min-width:0}
+.j-title{font-family:'Cabinet Grotesk',sans-serif;font-size:1rem;font-weight:700;color:var(--white);letter-spacing:-0.01em}
+.j-co{font-size:0.83rem;color:var(--muted);margin-top:2px}
+.j-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.jtag{font-size:0.7rem;padding:3px 10px;border-radius:100px;border:1px solid var(--border);color:var(--muted);font-weight:500}
+.jtag.g{background:rgba(59,130,246,0.08);color:var(--blue3);border-color:rgba(59,130,246,0.18)}
+.j-right{text-align:right;flex-shrink:0}
+.pct-n{font-family:'Cabinet Grotesk',sans-serif;font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.02em}
+.pct-l{font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;font-weight:500}
+.j-apply-btn{margin-top:8px;background:rgba(59,130,246,0.1);color:var(--blue3);border:1px solid rgba(59,130,246,0.2);padding:5px 12px;border-radius:7px;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Instrument Sans',sans-serif}
+.j-apply-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}
+
+/* ─── MENTORS ─── */
+#mentors{background:var(--bg2)}
+#mentors::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border3),transparent)}
+.mentors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.mentor-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.25s}
+.mentor-card:hover{border-color:var(--border3);transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.4)}
+.m-av{width:56px;height:56px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:'Cabinet Grotesk',sans-serif;font-size:1.1rem;font-weight:900;color:white;flex-shrink:0}
+.av1{background:linear-gradient(135deg,#3b82f6,#06b6d4)}
+.av2{background:linear-gradient(135deg,#1d4ed8,#3b82f6)}
+.av3{background:linear-gradient(135deg,#0891b2,#06b6d4)}
+.av4{background:linear-gradient(135deg,#2563eb,#0891b2)}
+.m-name{font-family:'Cabinet Grotesk',sans-serif;font-size:0.98rem;font-weight:800;color:var(--white);letter-spacing:-0.01em}
+.m-role{font-size:0.8rem;color:var(--muted2);margin-top:2px}
+.m-co{font-size:0.8rem;color:var(--blue3);margin-top:2px;font-weight:500}
+.m-stars{font-size:0.78rem;margin-top:8px;color:var(--muted2)}
+.m-stars b{color:var(--white)}
+.m-rate{font-size:0.78rem;color:var(--muted);margin-top:4px}
+.m-btn{margin-top:1rem;width:100%;background:rgba(59,130,246,0.1);color:var(--blue3);border:1px solid rgba(59,130,246,0.2);padding:9px;border-radius:9px;font-family:'Instrument Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:all 0.22s}
+.m-btn:hover{background:var(--blue);color:white;border-color:var(--blue)}
+.m-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.m-tag{font-size:0.67rem;padding:2px 8px;border-radius:100px;background:rgba(59,130,246,0.06);color:var(--muted);border:1px solid var(--border);font-weight:500}
+
+/* ─── QUIZ ─── */
+#quiz{background:var(--bg)}
+.quiz-box{max-width:620px;margin:3rem auto 0;background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden}
+.quiz-box::before{content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,0.1),transparent);pointer-events:none}
+.q-prog-wrap{margin-bottom:2rem}
+.q-prog-steps{display:flex;justify-content:space-between;margin-bottom:8px}
+.q-prog-label{font-size:0.75rem;color:var(--muted);font-weight:500}
+.q-prog{display:flex;gap:5px}
+.qpd{height:3px;flex:1;border-radius:10px;background:var(--border);transition:background 0.4s,transform 0.2s}
+.qpd.done{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.qstep{display:none}
+.qstep.on{display:block;animation:fadeUp 0.4s ease}
+.q-q{font-family:'Cabinet Grotesk',sans-serif;font-size:1.25rem;font-weight:800;color:var(--white);margin-bottom:5px;line-height:1.35;letter-spacing:-0.02em}
+.q-hint{font-size:0.84rem;color:var(--muted2);margin-bottom:1.5rem}
+.q-opts{display:flex;flex-direction:column;gap:9px}
+.qopt{background:var(--bg3);border:1.5px solid var(--border);border-radius:11px;padding:13px 16px;font-family:'Instrument Sans',sans-serif;font-size:0.9rem;color:var(--muted2);cursor:pointer;text-align:left;width:100%;transition:all 0.2s;display:flex;align-items:center;gap:10px}
+.qopt:hover{border-color:var(--border2);color:var(--text);background:var(--card2)}
+.qopt.sel{border-color:var(--blue);background:rgba(59,130,246,0.1);color:var(--blue3)}
+.qopt-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border)}
+.qopt-icon svg{width:15px;height:15px}
+.q-result{text-align:center;display:none}
+.q-result.on{display:block;animation:fadeUp 0.5s ease}
+.r-icon{width:70px;height:70px;background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(6,182,212,0.1));border:1px solid rgba(59,130,246,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem}
+.r-icon svg{width:30px;height:30px}
+.r-label{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;margin-bottom:4px}
+.r-career{font-family:'Cabinet Grotesk',sans-serif;font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.6rem;letter-spacing:-0.03em}
+.r-desc{font-size:0.9rem;color:var(--muted2);line-height:1.7;margin-bottom:1.5rem;max-width:440px;margin-left:auto;margin-right:auto}
+.r-btn{background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;padding:12px 28px;border-radius:10px;font-family:'Instrument Sans',sans-serif;font-size:0.92rem;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(59,130,246,0.35);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.r-btn:hover{box-shadow:0 6px 28px rgba(59,130,246,0.5);transform:translateY(-1px)}
+.r-btn svg{width:16px;height:16px}
+
+/* ─── CTA ─── */
+.cta-sec{background:var(--bg2);padding:5.5rem 2rem}
+.cta-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border3),transparent)}
+.cta-box{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(6,182,212,0.04));border:1px solid rgba(59,130,246,0.18);border-radius:22px;padding:4.5rem 2rem;text-align:center;max-width:680px;margin:0 auto;position:relative;overflow:hidden}
+.cta-box::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(circle,rgba(59,130,246,0.12),transparent 70%);pointer-events:none}
+.cta-box h2{font-family:'Cabinet Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;color:var(--white);margin-bottom:0.8rem;letter-spacing:-0.04em;position:relative}
+.cta-box p{color:var(--muted2);margin-bottom:2.2rem;line-height:1.7;max-width:440px;margin-left:auto;margin-right:auto;position:relative}
+.cta-box .btn-primary{display:inline-flex;position:relative}
+
+/* ─── FOOTER ─── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Cabinet Grotesk',sans-serif;font-size:1rem;font-weight:900;color:var(--white);display:flex;align-items:center;gap:8px}
+.footer-text{font-size:0.82rem;color:var(--muted)}
+.footer-text span{color:var(--blue3);font-weight:500}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:0.88rem;color:var(--text);z-index:1000;display:flex;align-items:center;gap:10px;transform:translateY(80px);opacity:0;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;max-width:320px}
+.toast.show{transform:translateY(0);opacity:1;pointer-events:all}
+.toast svg{width:18px;height:18px;flex-shrink:0}
+.toast.success{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.12)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:768px){
+  nav{padding:0 1.25rem}
+  .nav-links,.nav-ghost{display:none}
+  .nav-hamburger{display:flex}
+  .hero{padding:6rem 1.25rem 4rem}
+  .hero-stats{gap:2rem}
+  .hstat strong{font-size:1.7rem}
+  section{padding:4rem 1.25rem}
+  .paths-grid,.tools-grid,.mentors-grid{grid-template-columns:1fr}
+  .quiz-box{padding:1.75rem}
+  .form-row{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:1.5rem}
+  .hero-stats{flex-wrap:wrap;justify-content:center}
+  .jobs-filter{gap:6px}
+}
+
+/* ─── ICON STROKES ─── */
+.icon-blue{stroke:var(--blue2);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icon-cyan{stroke:var(--cyan);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icon-white{stroke:var(--muted2);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.icon-fill-blue{fill:var(--blue2)}
+.icon-fill-cyan{fill:var(--cyan)}
+
+/* ─── RESUME BUILDER MODAL specific ─── */
+.resume-preview{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-top:1rem;font-size:0.8rem;color:var(--muted2);line-height:1.7;font-family:'Courier New',monospace;white-space:pre-wrap;max-height:180px;overflow-y:auto}
+.ai-feedback{background:rgba(59,130,246,0.07);border:1px solid rgba(59,130,246,0.2);border-radius:10px;padding:1rem;margin-top:0.8rem;font-size:0.84rem;color:var(--blue3);line-height:1.6;display:none}
+.ai-feedback.on{display:block;animation:fadeUp 0.4s ease}
+.feedback-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.09em;font-weight:700;margin-bottom:6px;color:var(--blue)}
+
+/* ─── INTERVIEW MODAL specific ─── */
+.interview-qa{display:flex;flex-direction:column;gap:10px}
+.iq-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem}
+.iq-q{font-size:0.82rem;font-weight:600;color:var(--muted2);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.06em}
+.iq-a{font-size:0.88rem;color:var(--text);line-height:1.6}
+.score-row{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.score-dot{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.score-label{font-size:0.78rem;color:var(--muted);flex:1}
+.score-val{font-size:0.82rem;font-weight:700;color:var(--blue3)}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" class="icon-blue"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <span id="toastMsg">Done!</span>
+</div>
+
+<!-- MODALS -->
+<!-- Resume Builder Modal -->
+<div class="modal-overlay" id="resumeModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title">Resume Builder</div><div class="modal-sub">ATS-optimized for your career path</div></div>
+      <button class="modal-close" onclick="closeModal('resumeModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body" id="resumeBody">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" placeholder="e.g. Juan dela Cruz" id="rName">
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Career Path</label>
+          <select class="form-select" id="rPath">
+            <option>Software Engineering</option><option>Data Analytics</option><option>UX/UI Design</option><option>Digital Marketing</option><option>Finance & Banking</option><option>Healthcare</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Experience Level</label>
+          <select class="form-select" id="rLevel">
+            <option>Fresh Graduate</option><option>Internship</option><option>1-2 Years</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Skills (comma-separated)</label>
+        <input class="form-input" type="text" placeholder="e.g. Python, React, SQL, Figma" id="rSkills">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Brief Summary / Objective</label>
+        <textarea class="form-textarea" placeholder="Write 2–3 sentences about yourself and your career goals..." id="rSummary"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Work / Project Experience</label>
+        <textarea class="form-textarea" placeholder="List any internships, projects, or freelance work..." id="rExp"></textarea>
+      </div>
+      <button class="tool-action" onclick="generateResume()" style="margin-top:0.5rem">
+        <svg viewBox="0 0 24 24" class="icon-blue"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V9l-6-6z"/><path d="M9 3v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+        Generate ATS Resume
+      </button>
+      <div class="ai-feedback" id="resumeFeedback">
+        <div class="feedback-label">AI Feedback on your resume</div>
+        <div id="resumeFeedbackText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mock Interview Modal -->
+<div class="modal-overlay" id="interviewModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title">Mock Interview</div><div class="modal-sub">Practice with AI-powered questions</div></div>
+      <button class="modal-close" onclick="closeModal('interviewModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body" id="interviewBody">
+      <div id="interviewSetup">
+        <div class="form-group"><label class="form-label">Target Role</label>
+          <select class="form-select" id="iRole">
+            <option>Junior Software Engineer</option><option>Data Analyst</option><option>UX/UI Designer</option><option>Digital Marketing Associate</option><option>Finance Analyst</option><option>Nurse / Healthcare Staff</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Interview Type</label>
+          <select class="form-select" id="iType">
+            <option>Behavioral (Tell me about yourself)</option><option>Technical (Role-specific questions)</option><option>Case Study / Problem Solving</option>
+          </select>
+        </div>
+        <button class="tool-action" onclick="startInterview()">
+          <svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          Start Practice Session
+        </button>
+      </div>
+      <div id="interviewQuestions" style="display:none">
+        <div class="interview-qa" id="iQA"></div>
+        <button class="tool-action" onclick="resetInterview()" style="margin-top:1rem">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+          New Session
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LinkedIn Modal -->
+<div class="modal-overlay" id="linkedinModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title">LinkedIn Optimizer</div><div class="modal-sub">Get a keyword audit and profile rewrite</div></div>
+      <button class="modal-close" onclick="closeModal('linkedinModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Your LinkedIn Profile URL</label>
+        <input class="form-input" type="url" placeholder="https://linkedin.com/in/yourname" id="liUrl">
+      </div>
+      <div class="form-group"><label class="form-label">Current Headline (paste it here)</label>
+        <input class="form-input" type="text" placeholder="e.g. BS Computer Science Student at De La Salle" id="liHeadline">
+      </div>
+      <div class="form-group"><label class="form-label">Target Career Field</label>
+        <select class="form-select" id="liField">
+          <option>Software Engineering</option><option>Data Analytics</option><option>UX/UI Design</option><option>Digital Marketing</option><option>Finance</option><option>Healthcare</option>
+        </select>
+      </div>
+      <button class="tool-action" onclick="optimizeLinkedIn()">
+        <svg viewBox="0 0 24 24" class="icon-blue"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Analyze & Optimize
+      </button>
+      <div class="ai-feedback" id="liResults">
+        <div class="feedback-label">Optimization Suggestions</div>
+        <div id="liResultsText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cover Letter Modal -->
+<div class="modal-overlay" id="coverModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title">Cover Letter Generator</div><div class="modal-sub">Tailored to the specific job posting</div></div>
+      <button class="modal-close" onclick="closeModal('coverModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Your Name</label>
+        <input class="form-input" type="text" placeholder="Your full name" id="clName">
+      </div>
+      <div class="form-group"><label class="form-label">Job Title Applying For</label>
+        <input class="form-input" type="text" placeholder="e.g. Junior Frontend Developer" id="clJob">
+      </div>
+      <div class="form-group"><label class="form-label">Company Name</label>
+        <input class="form-input" type="text" placeholder="e.g. Accenture Philippines" id="clCompany">
+      </div>
+      <div class="form-group"><label class="form-label">Paste Job Description (key requirements)</label>
+        <textarea class="form-textarea" placeholder="Paste the key responsibilities or requirements from the job posting..." id="clJD"></textarea>
+      </div>
+      <div class="form-group"><label class="form-label">Your Relevant Skills / Experience</label>
+        <textarea class="form-textarea" placeholder="Brief summary of what you bring to this role..." id="clSkills"></textarea>
+      </div>
+      <button class="tool-action" onclick="generateCoverLetter()">
+        <svg viewBox="0 0 24 24" class="icon-blue"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Generate Cover Letter
+      </button>
+      <div class="ai-feedback" id="clResult">
+        <div class="feedback-label">Your Cover Letter</div>
+        <div id="clResultText" style="white-space:pre-wrap;line-height:1.7;font-size:0.85rem"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Job Apply Modal -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title" id="applyJobTitle">Apply for Job</div><div class="modal-sub" id="applyJobCo"></div></div>
+      <button class="modal-close" onclick="closeModal('applyModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body" id="applyBody">
+      <div id="applyForm">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="apName" type="text" placeholder="Your full name"></div>
+        <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="apEmail" type="email" placeholder="you@email.com"></div>
+        <div class="form-group"><label class="form-label">LinkedIn / Portfolio URL</label><input class="form-input" id="apLink" type="url" placeholder="https://..."></div>
+        <div class="form-group"><label class="form-label">Why are you a great fit? (2-3 sentences)</label><textarea class="form-textarea" id="apWhy" placeholder="Be specific about the skills and experiences that match this role..."></textarea></div>
+      </div>
+      <div class="modal-success" id="applySuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="modal-title" style="margin-bottom:6px">Application Submitted!</div>
+        <div class="modal-sub">We'll notify you when the employer responds. Check your email.</div>
+        <button class="r-btn" style="margin-top:1.5rem" onclick="closeModal('applyModal')"><svg viewBox="0 0 24 24" class="icon-white"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Back to Jobs</button>
+      </div>
+    </div>
+    <div class="modal-footer" id="applyFooter">
+      <button class="modal-cancel" onclick="closeModal('applyModal')">Cancel</button>
+      <button class="modal-submit" onclick="submitApplication()">Submit Application</button>
+    </div>
+  </div>
+</div>
+
+<!-- Book Mentor Modal -->
+<div class="modal-overlay" id="mentorModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div><div class="modal-title" id="bookMentorName">Book a Session</div><div class="modal-sub" id="bookMentorRole"></div></div>
+      <button class="modal-close" onclick="closeModal('mentorModal')"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body" id="mentorBody">
+      <div id="bookingForm">
+        <div class="form-group"><label class="form-label">Your Name</label><input class="form-input" id="bkName" type="text" placeholder="Your full name"></div>
+        <div class="form-group"><label class="form-label">Email Address</label><input class="form-input" id="bkEmail" type="email" placeholder="you@email.com"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Preferred Date</label><input class="form-input" id="bkDate" type="date"></div>
+          <div class="form-group"><label class="form-label">Preferred Time</label>
+            <select class="form-select" id="bkTime">
+              <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>7:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">What do you need help with?</label><textarea class="form-textarea" id="bkGoal" placeholder="e.g. Review my portfolio, career advice, mock interview prep..."></textarea></div>
+      </div>
+      <div class="modal-success" id="bookingSuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+        <div class="modal-title" style="margin-bottom:6px">Session Booked!</div>
+        <div class="modal-sub">You'll receive a confirmation email with the meeting link.</div>
+        <button class="r-btn" style="margin-top:1.5rem" onclick="closeModal('mentorModal')"><svg viewBox="0 0 24 24" class="icon-white"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="modal-footer" id="mentorFooter">
+      <button class="modal-cancel" onclick="closeModal('mentorModal')">Cancel</button>
+      <button class="modal-submit" onclick="submitBooking()">Confirm Booking</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="logo" href="#">
+    <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+    Launch<span>Path</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#paths" class="nav-link">Paths</a></li>
+    <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+    <li><a href="#tools" class="nav-link">Skills</a></li>
+    <li><a href="#jobs" class="nav-link">Jobs</a></li>
+    <li><a href="#mentors" class="nav-link">Mentors</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-ghost" onclick="scrollTo('quiz')">Career Quiz</button>
+    <button class="nav-cta" onclick="scrollTo('paths')">Get Started</button>
+  </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#paths" onclick="toggleMenu()">Career Paths</a>
+  <a href="#roadmap" onclick="toggleMenu()">Roadmap</a>
+  <a href="#tools" onclick="toggleMenu()">Skills & Tools</a>
+  <a href="#jobs" onclick="toggleMenu()">Job Matches</a>
+  <a href="#mentors" onclick="toggleMenu()">Mentors</a>
+  <a href="#quiz" onclick="toggleMenu()">Career Quiz</a>
+  <button class="mob-cta" onclick="scrollTo('paths');toggleMenu()">Get Started Free</button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow1"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="eyebrow"><span class="status-dot"></span> Built for CS & IT students in the Philippines</div>
+    <h1>
+      <span class="t-white">Stop guessing.</span><br>
+      <span class="t-blue">Start building</span><br>
+      <span class="t-white">your career.</span>
+    </h1>
+    <p class="hero-sub">A step-by-step roadmap, skill training, AI-powered tools, mentor access, and job matches — everything you need to land your first tech job.</p>
+    <div class="btns">
+      <button class="btn-primary" onclick="scrollTo('paths')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg>
+        Start your path
+      </button>
+      <button class="btn-outline" onclick="scrollTo('quiz')">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+        Take career quiz
+      </button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><strong>87%</strong><span>Hired within 6 months</span></div>
+      <div class="hstat"><strong>12,400+</strong><span>Students helped</span></div>
+      <div class="hstat"><strong>4.9 / 5</strong><span>Student rating</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PATHS -->
+<section id="paths">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Step 1</div>
+      <h2 class="s-title">Pick your career path</h2>
+      <p class="s-desc">Select a path to unlock your personalized step-by-step roadmap below.</p>
+    </div>
+    <div class="paths-grid">
+      <!-- Tech -->
+      <div class="path-card" onclick="selectPath(this,'tech')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="path-name">Tech & Software</div>
+        <div class="path-desc">Web development, mobile apps, backend engineering. Highest-paying entry-level jobs in PH.</div>
+        <div class="ptags"><span class="ptag hot">High demand</span><span class="ptag">₱40–80k/mo</span></div>
+      </div>
+      <!-- Data -->
+      <div class="path-card" onclick="selectPath(this,'data')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="path-name">Data & Analytics</div>
+        <div class="path-desc">Data analysis, machine learning, business intelligence. Fastest-growing field right now.</div>
+        <div class="ptags"><span class="ptag hot">Fast growing</span><span class="ptag">₱35–70k/mo</span></div>
+      </div>
+      <!-- Design -->
+      <div class="path-card" onclick="selectPath(this,'design')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg></div>
+        <div class="path-name">Design & UX</div>
+        <div class="path-desc">Product design, UI/UX, branding. Blend creativity with user research and problem-solving.</div>
+        <div class="ptags"><span class="ptag">Creative</span><span class="ptag">₱30–65k/mo</span></div>
+      </div>
+      <!-- Marketing -->
+      <div class="path-card" onclick="selectPath(this,'marketing')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="path-name">Marketing & Media</div>
+        <div class="path-desc">Digital marketing, content creation, social media strategy. Great for creative communicators.</div>
+        <div class="ptags"><span class="ptag hot">Always needed</span><span class="ptag">₱25–55k/mo</span></div>
+      </div>
+      <!-- Finance -->
+      <div class="path-card" onclick="selectPath(this,'finance')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <div class="path-name">Finance & Banking</div>
+        <div class="path-desc">Investment banking, financial planning, accounting. Prestigious, well-paid, competitive.</div>
+        <div class="ptags"><span class="ptag">Prestigious</span><span class="ptag">₱35–75k/mo</span></div>
+      </div>
+      <!-- Health -->
+      <div class="path-card" onclick="selectPath(this,'health')">
+        <div class="path-select-btn"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/></svg></div>
+        <div class="path-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <div class="path-name">Healthcare</div>
+        <div class="path-desc">Nursing, medicine, public health. Stable, meaningful career with strong job security.</div>
+        <div class="ptags"><span class="ptag hot">Very stable</span><span class="ptag">₱30–90k/mo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Step 2</div>
+      <h2 class="s-title">Your personalized roadmap</h2>
+      <p class="s-desc">Select a path above and follow these milestones in order to land your first job.</p>
+    </div>
+    <div class="rm-wrap" id="rmWrap">
+      <div class="rm-header">
+        <div class="rm-icon" id="rmIconEl"><svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div>
+          <div class="rm-title" id="rmTitle">Software Engineer Roadmap</div>
+          <div class="rm-sub" id="rmSub">5 milestones · Track your progress</div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-family:'Cabinet Grotesk',sans-serif;font-size:1.3rem;font-weight:900;color:var(--white)" id="rmPct">0%</div>
+          <div style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em">Complete</div>
+        </div>
+      </div>
+      <div class="rm-progress-bar"><div class="rm-progress-fill" id="rmProgressFill"></div></div>
+      <div class="rm-body" id="rmSteps"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Step 3</div>
+      <h2 class="s-title">Tools to make you hireable</h2>
+      <p class="s-desc">Every tool is built around what recruiters actually look for.</p>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="t-icon blue"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V9l-6-6z"/><polyline points="9 3 9 9 15 9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg></div>
+        <div class="t-name">Resume Builder</div>
+        <div class="t-desc">ATS-optimized templates with AI feedback on your bullet points so recruiters actually read your resume.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp0">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb0"></div></div>
+        <button class="tool-action" onclick="openModal('resumeModal')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Build My Resume
+        </button>
+      </div>
+      <div class="tool-card">
+        <div class="t-icon cyan"><svg viewBox="0 0 24 24" class="icon-cyan"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="t-name">Mock Interviews</div>
+        <div class="t-desc">Practice with an AI interviewer for your target role. Get scored on answers, confidence, and clarity.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp1">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb1"></div></div>
+        <button class="tool-action" onclick="openModal('interviewModal')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/></svg>
+          Start Practice
+        </button>
+      </div>
+      <div class="tool-card">
+        <div class="t-icon white"><svg viewBox="0 0 24 24" class="icon-white"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div class="t-name">LinkedIn Optimizer</div>
+        <div class="t-desc">Paste your current headline and get keyword audit, rewrite suggestions, and connection strategies.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp2">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb2"></div></div>
+        <button class="tool-action" onclick="openModal('linkedinModal')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Optimize Profile
+        </button>
+      </div>
+      <div class="tool-card">
+        <div class="t-icon blue"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+        <div class="t-name">Skill Courses</div>
+        <div class="t-desc">Free micro-courses matched exactly to the skills listed in job postings for your chosen career path.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp3">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb3"></div></div>
+        <button class="tool-action" onclick="showToast('Courses matched to your path — coming soon!','info')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Browse Courses
+        </button>
+      </div>
+      <div class="tool-card">
+        <div class="t-icon cyan"><svg viewBox="0 0 24 24" class="icon-cyan"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="t-name">Cover Letter Generator</div>
+        <div class="t-desc">Paste a job description and generate a tailored, authentic cover letter in under a minute.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp4">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb4"></div></div>
+        <button class="tool-action" onclick="openModal('coverModal')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Generate Letter
+        </button>
+      </div>
+      <div class="tool-card">
+        <div class="t-icon white"><svg viewBox="0 0 24 24" class="icon-white"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="t-name">Portfolio Builder</div>
+        <div class="t-desc">Build a professional portfolio site in minutes with no coding needed. Show your projects to employers.</div>
+        <div class="prog-row"><span>Your progress</span><span id="tp5">0%</span></div>
+        <div class="prog-out"><div class="prog-in" style="width:0%" id="pb5"></div></div>
+        <button class="tool-action" onclick="showToast('Portfolio builder launching soon — get notified!','info')">
+          <svg viewBox="0 0 24 24" class="icon-blue"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Build Portfolio
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOBS -->
+<section id="jobs">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Step 4</div>
+      <h2 class="s-title">Job matches for you</h2>
+      <p class="s-desc">Entry-level and internship roles matched to your career path and current skill level.</p>
+    </div>
+    <div class="jobs-filter">
+      <button class="filter-btn active" onclick="filterJobs(this,'all')">All Roles</button>
+      <button class="filter-btn" onclick="filterJobs(this,'entry')">Entry-Level</button>
+      <button class="filter-btn" onclick="filterJobs(this,'intern')">Internships</button>
+      <button class="filter-btn" onclick="filterJobs(this,'remote')">Remote</button>
+    </div>
+    <div class="jobs-list" id="jobsList">
+      <div class="job-card" data-type="entry" onclick="openApply('Junior Software Engineer','Accenture Philippines · Taguig City · Hybrid')">
+        <div class="j-logo"><svg viewBox="0 0 24 24" class="icon-blue" width="22" height="22"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="j-info">
+          <div class="j-title">Junior Software Engineer</div>
+          <div class="j-co">Accenture Philippines · Taguig City · Hybrid</div>
+          <div class="j-tags"><span class="jtag g">Entry-level</span><span class="jtag g">Fresh grad OK</span><span class="jtag">React</span><span class="jtag">Node.js</span><span class="jtag">₱35–50k/mo</span></div>
+        </div>
+        <div class="j-right"><div class="pct-n">92%</div><div class="pct-l">match</div><button class="j-apply-btn" onclick="event.stopPropagation();openApply('Junior Software Engineer','Accenture Philippines · Taguig City · Hybrid')">Apply</button></div>
+      </div>
+      <div class="job-card" data-type="intern" onclick="openApply('Data Analyst Intern','Globe Telecom · BGC · On-site')">
+        <div class="j-logo"><svg viewBox="0 0 24 24" class="icon-blue" width="22" height="22"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+        <div class="j-info">
+          <div class="j-title">Data Analyst Intern</div>
+          <div class="j-co">Globe Telecom · BGC · On-site</div>
+          <div class="j-tags"><span class="jtag g">Internship</span><span class="jtag g">Training provided</span><span class="jtag">Excel</span><span class="jtag">SQL</span><span class="jtag">Power BI</span></div>
+        </div>
+        <div class="j-right"><div class="pct-n">88%</div><div class="pct-l">match</div><button class="j-apply-btn" onclick="event.stopPropagation();openApply('Data Analyst Intern','Globe Telecom · BGC · On-site')">Apply</button></div>
+      </div>
+      <div class="job-card" data-type="entry" onclick="openApply('Digital Marketing Associate','Lazada · Makati · Hybrid')">
+        <div class="j-logo"><svg viewBox="0 0 24 24" class="icon-blue" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>
+        <div class="j-info">
+          <div class="j-title">Digital Marketing Associate</div>
+          <div class="j-co">Lazada · Makati · Hybrid</div>
+          <div class="j-tags"><span class="jtag g">Fresh grad welcome</span><span class="jtag">SEO</span><span class="jtag">Meta Ads</span><span class="jtag">Content</span></div>
+        </div>
+        <div class="j-right"><div class="pct-n">85%</div><div class="pct-l">match</div><button class="j-apply-btn" onclick="event.stopPropagation();openApply('Digital Marketing Associate','Lazada · Makati · Hybrid')">Apply</button></div>
+      </div>
+      <div class="job-card" data-type="remote" onclick="openApply('Junior UX Designer','UnionBank · Ortigas · Remote')">
+        <div class="j-logo"><svg viewBox="0 0 24 24" class="icon-blue" width="22" height="22"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+        <div class="j-info">
+          <div class="j-title">Junior UX Designer</div>
+          <div class="j-co">UnionBank · Ortigas · Remote</div>
+          <div class="j-tags"><span class="jtag g">Portfolio required</span><span class="jtag g">Remote</span><span class="jtag">Figma</span><span class="jtag">User Research</span><span class="jtag">₱30–45k/mo</span></div>
+        </div>
+        <div class="j-right"><div class="pct-n">78%</div><div class="pct-l">match</div><button class="j-apply-btn" onclick="event.stopPropagation();openApply('Junior UX Designer','UnionBank · Ortigas · Remote')">Apply</button></div>
+      </div>
+      <div class="job-card" data-type="intern remote" onclick="openApply('Frontend Developer Intern','Canva · Remote · Part-time')">
+        <div class="j-logo"><svg viewBox="0 0 24 24" class="icon-blue" width="22" height="22"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="j-info">
+          <div class="j-title">Frontend Developer Intern</div>
+          <div class="j-co">Canva · Remote · Part-time</div>
+          <div class="j-tags"><span class="jtag g">Remote</span><span class="jtag g">Internship</span><span class="jtag">React</span><span class="jtag">TypeScript</span><span class="jtag">Tailwind</span></div>
+        </div>
+        <div class="j-right"><div class="pct-n">74%</div><div class="pct-l">match</div><button class="j-apply-btn" onclick="event.stopPropagation();openApply('Frontend Developer Intern','Canva · Remote · Part-time')">Apply</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORS -->
+<section id="mentors">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Step 5</div>
+      <h2 class="s-title">Book a mentor session</h2>
+      <p class="s-desc">Real professionals who were once students like you. Skip years of trial and error.</p>
+    </div>
+    <div class="mentors-grid">
+      <div class="mentor-card">
+        <div class="m-av av1">AR</div>
+        <div class="m-name">Ana Reyes</div>
+        <div class="m-role">Senior Software Engineer</div>
+        <div class="m-co">@ Google Singapore</div>
+        <div class="m-tags"><span class="m-tag">System Design</span><span class="m-tag">Interviews</span><span class="m-tag">Salary Nego</span></div>
+        <div class="m-stars"><b>4.9</b> · 87 sessions</div>
+        <div class="m-rate">₱500 / 30-min</div>
+        <button class="m-btn" onclick="openBooking('Ana Reyes','Senior Software Engineer @ Google Singapore')">Book Session</button>
+      </div>
+      <div class="mentor-card">
+        <div class="m-av av2">JM</div>
+        <div class="m-name">Jose Mendoza</div>
+        <div class="m-role">Data Science Manager</div>
+        <div class="m-co">@ Shopee Philippines</div>
+        <div class="m-tags"><span class="m-tag">ML/AI</span><span class="m-tag">SQL</span><span class="m-tag">Career Growth</span></div>
+        <div class="m-stars"><b>4.8</b> · 63 sessions</div>
+        <div class="m-rate">₱400 / 30-min</div>
+        <button class="m-btn" onclick="openBooking('Jose Mendoza','Data Science Manager @ Shopee Philippines')">Book Session</button>
+      </div>
+      <div class="mentor-card">
+        <div class="m-av av3">ML</div>
+        <div class="m-name">Maria Lim</div>
+        <div class="m-role">UX Design Lead</div>
+        <div class="m-co">@ Canva Australia</div>
+        <div class="m-tags"><span class="m-tag">Figma</span><span class="m-tag">Portfolio Review</span><span class="m-tag">UX Research</span></div>
+        <div class="m-stars"><b>5.0</b> · 41 sessions</div>
+        <div class="m-rate">₱450 / 30-min</div>
+        <button class="m-btn" onclick="openBooking('Maria Lim','UX Design Lead @ Canva Australia')">Book Session</button>
+      </div>
+      <div class="mentor-card">
+        <div class="m-av av4">RB</div>
+        <div class="m-name">Rico Buenaventura</div>
+        <div class="m-role">Finance Analyst</div>
+        <div class="m-co">@ JP Morgan Manila</div>
+        <div class="m-tags"><span class="m-tag">Excel Modeling</span><span class="m-tag">CFA</span><span class="m-tag">Banking</span></div>
+        <div class="m-stars"><b>4.7</b> · 29 sessions</div>
+        <div class="m-rate">₱350 / 30-min</div>
+        <button class="m-btn" onclick="openBooking('Rico Buenaventura','Finance Analyst @ JP Morgan Manila')">Book Session</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-eyebrow">Not sure where to start?</div>
+      <h2 class="s-title">Take the career quiz</h2>
+      <p class="s-desc">4 quick questions to match you with the right career path.</p>
+    </div>
+    <div class="quiz-box">
+      <div class="q-prog-wrap">
+        <div class="q-prog-steps"><span class="q-prog-label" id="qLabel">Question 1 of 4</span></div>
+        <div class="q-prog"><div class="qpd" id="qp0"></div><div class="qpd" id="qp1"></div><div class="qpd" id="qp2"></div><div class="qpd" id="qp3"></div></div>
+      </div>
+      <div class="qstep on" id="qs0">
+        <div class="q-q">What kind of tasks do you enjoy most?</div>
+        <div class="q-hint">Pick the one that feels most natural to you</div>
+        <div class="q-opts">
+          <button class="qopt" onclick="qa(0,0)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M10.3 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v10l-4 1-4-1-2.7 7z"/><path d="M7 7h10M7 11h7"/></svg></div>Building and solving logical problems</button>
+          <button class="qopt" onclick="qa(0,1)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg></div>Designing and creating visual things</button>
+          <button class="qopt" onclick="qa(0,2)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>Analyzing numbers and finding patterns</button>
+          <button class="qopt" onclick="qa(0,3)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>Communicating, writing, and persuading</button>
+        </div>
+      </div>
+      <div class="qstep" id="qs1">
+        <div class="q-q">What's your biggest strength right now?</div>
+        <div class="q-hint">Be honest — this helps us match you better</div>
+        <div class="q-opts">
+          <button class="qopt" onclick="qa(1,0)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>I learn technical tools fast</button>
+          <button class="qopt" onclick="qa(1,1)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>I have good visual taste and eye for detail</button>
+          <button class="qopt" onclick="qa(1,2)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>Good with spreadsheets and research</button>
+          <button class="qopt" onclick="qa(1,3)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>Good with people and presenting ideas</button>
+        </div>
+      </div>
+      <div class="qstep" id="qs2">
+        <div class="q-q">What matters most in your first job?</div>
+        <div class="q-hint">There's no wrong answer here</div>
+        <div class="q-opts">
+          <button class="qopt" onclick="qa(2,0)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>Highest possible starting salary</button>
+          <button class="qopt" onclick="qa(2,1)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>Working at a global or well-known company</button>
+          <button class="qopt" onclick="qa(2,2)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>Doing work I find meaningful</button>
+          <button class="qopt" onclick="qa(2,3)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>Fast career growth and advancement</button>
+        </div>
+      </div>
+      <div class="qstep" id="qs3">
+        <div class="q-q">How comfortable are you learning new software?</div>
+        <div class="q-hint">Rate your current comfort level honestly</div>
+        <div class="q-opts">
+          <button class="qopt" onclick="qa(3,0)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>Very comfortable — I love learning new tools</button>
+          <button class="qopt" onclick="qa(3,1)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg></div>Pretty good — I can learn with guidance</button>
+          <button class="qopt" onclick="qa(3,2)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>Somewhat — I prefer people-focused work</button>
+          <button class="qopt" onclick="qa(3,3)"><div class="qopt-icon"><svg viewBox="0 0 24 24" class="icon-blue"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>I prefer structured, established processes</button>
+        </div>
+      </div>
+      <div class="q-result" id="qResult">
+        <div class="r-icon" id="rIconEl"><svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="r-label">Your best career match</div>
+        <div class="r-career" id="rCareer">Tech & Software Engineering</div>
+        <div class="r-desc" id="rDesc"></div>
+        <button class="r-btn" onclick="scrollTo('paths')">
+          <svg viewBox="0 0 24 24" class="icon-white" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          See my full roadmap
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Your first job is closer than you think.</h2>
+      <p>Thousands of Filipino students used LaunchPath to go from confused to employed. Your path starts with one click.</p>
+      <button class="btn-primary" onclick="scrollTo('paths')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg>
+        Start free — no account needed
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+    LaunchPath
+  </div>
+  <div class="footer-text">Built for students in the <span>Philippines</span> · Free forever for students · &copy; 2025</div>
+</footer>
+
+<script>
+// ─── ROADMAP DATA ───
+const RM = {
+  tech:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,title:'Software Engineer Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Choose your language',d:'Start with Python or JavaScript — both have massive job markets. Focus on one until you\'re comfortable with loops, functions, and data structures.',sk:['Python','JavaScript','Git'],t:'1–2 months'},
+    {l:'Build real projects',d:'Employers don\'t care about your GPA — they care about what you\'ve built. Create 2–3 small apps and push them to GitHub.',sk:['GitHub','HTML/CSS','React or Django'],t:'2–3 months'},
+    {l:'Sharpen problem-solving',d:'Practice on LeetCode or HackerRank. Aim for 50 easy problems. This prepares you for technical interviews at any company.',sk:['Algorithms','Data Structures','LeetCode'],t:'1–2 months'},
+    {l:'Apply for internships',d:'Use Jobstreet, LinkedIn, and Kalibrr. Apply to 20–30 companies. Internships often convert to full-time jobs.',sk:['Resume','Cover Letter','LinkedIn'],t:'Ongoing'},
+    {l:'Land your first job',d:'Negotiate your offer, keep learning, and build your professional network. The first job opens every door after.',sk:['Negotiation','Communication','Networking'],t:'Goal!'}
+  ]},
+  data:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,title:'Data Analyst Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Learn Python & SQL',d:'These two are the foundation of any data career. Learn pandas, numpy, and how to write SQL queries against real databases.',sk:['Python','SQL','Pandas'],t:'2–3 months'},
+    {l:'Master visualization tools',d:'Learn Excel deeply — pivot tables, VLOOKUP — then Power BI or Tableau. Turn data into clear visual stories.',sk:['Excel','Power BI','Tableau'],t:'1–2 months'},
+    {l:'Build a data portfolio',d:'Analyze 2–3 real datasets from Kaggle. Document your findings in a notebook. Upload to GitHub and share on LinkedIn.',sk:['Kaggle','Jupyter','Storytelling'],t:'2–3 months'},
+    {l:'Get certified',d:'Google\'s Data Analytics Certificate on Coursera is respected by Philippine employers and takes about 6 months part-time.',sk:['Google Certificate','Statistics','Case Studies'],t:'3–6 months'},
+    {l:'Apply and interview',d:'Prepare for SQL interview questions and case studies. Companies like Globe, Metrobank, and Lazada hire fresh data analysts.',sk:['SQL Interview','Business Cases','Networking'],t:'Goal!'}
+  ]},
+  design:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>`,title:'UX/UI Designer Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Learn Figma inside-out',d:'Figma is the industry standard. Master components, auto-layout, prototyping, and design systems. It\'s free for students.',sk:['Figma','Components','Prototyping'],t:'1–2 months'},
+    {l:'Study design principles',d:'Learn typography, color theory, visual hierarchy, and accessibility. Study apps you love — reverse-engineer why they feel good.',sk:['Typography','Color Theory','Accessibility'],t:'1 month'},
+    {l:'Build 3 case studies',d:'Show your full process: research, wireframes, iterations, and outcomes. This is what gets you hired — not just pretty screens.',sk:['UX Research','Wireframing','User Testing'],t:'3–4 months'},
+    {l:'Do freelance projects',d:'Offer free or low-cost redesigns for local businesses. This builds your portfolio fast and gives you real client experience.',sk:['Client Comms','Feedback','Iteration'],t:'Ongoing'},
+    {l:'Apply to product companies',d:'Target companies with dedicated design teams: Canva, UnionBank, GCash, Grab Philippines. Include a portfolio link in every application.',sk:['Portfolio Site','LinkedIn','Interview Prep'],t:'Goal!'}
+  ]},
+  marketing:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,title:'Digital Marketer Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Learn the fundamentals',d:'Understand SEO, SEM, email marketing, content strategy, and social media. Google\'s free Digital Garage course is a great start.',sk:['SEO','SEM','Content Strategy'],t:'1–2 months'},
+    {l:'Run real ad campaigns',d:'Even with ₱500, run a Facebook or Google Ad. Understanding CTR, ROAS, and CPC sets you apart from other applicants.',sk:['Meta Ads','Google Ads','Analytics'],t:'1–2 months'},
+    {l:'Build your personal brand',d:'Create content on LinkedIn or Instagram about marketing. Proving you can grow an audience proves you can do it for companies.',sk:['LinkedIn','Content Creation','Personal Brand'],t:'Ongoing'},
+    {l:'Get certified',d:'Google Ads and HubSpot certifications are free and highly recognized. They make your resume stand out immediately.',sk:['Google Ads Cert','HubSpot Cert','Meta Blueprint'],t:'1–2 months'},
+    {l:'Apply for marketing roles',d:'Target e-commerce brands, agencies, and startups first. They offer faster learning and more responsibility.',sk:['Resume','Portfolio','Networking'],t:'Goal!'}
+  ]},
+  finance:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,title:'Finance & Banking Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Master Excel & modeling',d:'Excel is non-negotiable in finance. Learn pivot tables, VLOOKUP, and build basic financial models like income statements and DCF valuations.',sk:['Excel','Financial Modeling','DCF'],t:'2–3 months'},
+    {l:'Study CFA Level 1 material',d:'Even if you don\'t take the exam yet, studying CFA curriculum builds serious finance knowledge and signals commitment to employers.',sk:['CFA','Accounting','Equity Valuation'],t:'3–6 months'},
+    {l:'Build an investment portfolio',d:'Open a COL Financial or First Metro Sec account. Track your investments. Real-world experience beats textbook knowledge.',sk:['Stock Analysis','Portfolio Mgmt','COL Financial'],t:'Ongoing'},
+    {l:'Apply for bank internships',d:'BDO, BPI, Metrobank, and JP Morgan Manila all have internship programs. These often convert to full-time offers.',sk:['Resume','Networking','Interview Prep'],t:'3–6 months'},
+    {l:'Land your first analyst role',d:'Stay 2 years, perform well, get your next certification, and the career path opens up significantly from there.',sk:['CPA or CFA Progress','Professional Network','Career Planning'],t:'Goal!'}
+  ]},
+  health:{icon:`<svg viewBox="0 0 24 24" class="icon-blue"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>`,title:'Healthcare Career Roadmap',sub:'5 milestones · Track your progress',steps:[
+    {l:'Complete board requirements',d:'Know your PRC board exam timeline and prepare systematically — not just cramming before the exam.',sk:['PRC Board Exam','Review Center','Clinical Hours'],t:'1–2 years'},
+    {l:'Volunteer in clinical settings',d:'Hospital volunteer programs and community health programs build experience and references. Most employers want 6+ months of direct exposure.',sk:['Clinical Skills','Patient Interaction','Teamwork'],t:'6–12 months'},
+    {l:'Build your professional network',d:'Join PNA, PMA, or relevant Philippine professional associations. Attend conventions. Many healthcare jobs are filled through referrals.',sk:['PNA Membership','Conferences','Mentorship'],t:'Ongoing'},
+    {l:'Apply to hospitals and clinics',d:'Start with smaller private clinics or government health centers. This builds your record for larger hospital applications.',sk:['Resume','References','Interview Prep'],t:'Active Phase'},
+    {l:'Specialize and advance',d:'Consider a specialty, teaching hospital experience, or international work (Middle East, UK, US). Planning early maximizes lifetime earnings.',sk:['Specialization','NCLEX or IELTS','Career Planning'],t:'Long-term goal'}
+  ]}
+};
+
+const completedSteps = {};
+let currentPath = null;
+
+function selectPath(el, key) {
+  document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentPath = key;
+  if (!completedSteps[key]) completedSteps[key] = new Set();
+  const rm = RM[key];
+  document.getElementById('rmIconEl').innerHTML = rm.icon;
+  document.getElementById('rmTitle').textContent = rm.title;
+  document.getElementById('rmSub').textContent = rm.sub;
+  renderRoadmap(key);
+  document.getElementById('rmWrap').classList.add('on');
+  setTimeout(() => document.getElementById('roadmap').scrollIntoView({behavior:'smooth',block:'start'}), 120);
+}
+
+function renderRoadmap(key) {
+  const rm = RM[key];
+  const done = completedSteps[key];
+  const cont = document.getElementById('rmSteps');
+  cont.innerHTML = '';
+  rm.steps.forEach((s, i) => {
+    const isDone = done.has(i);
+    const isFirst = i === 0 && done.size === 0;
+    const div = document.createElement('div');
+    div.className = 'step-row' + (isDone ? ' completed' : '');
+    div.style.animationDelay = (i*0.07)+'s';
+    div.innerHTML = `
+      <div class="step-left">
+        <div class="step-num ${isDone?'done':(isFirst?'active':'todo')}">${isDone?`<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`:i+1}</div>
+        ${i<rm.steps.length-1?`<div class="step-line ${isDone?'done':''}"></div>`:''}
+      </div>
+      <div class="step-body">
+        <div class="step-meta">
+          <div class="step-title">${s.l}</div>
+          <span class="tbadge">${s.t}</span>
+        </div>
+        <div class="step-desc">${s.d}</div>
+        <div class="step-skills">${s.sk.map(x=>`<span class="spill">${x}</span>`).join('')}</div>
+        ${!isDone?`<button class="mark-done-btn" onclick="markDone('${key}',${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M20 6L9 17l-5-5"/></svg>Mark as done</button>`:`<span style="font-size:0.78rem;color:var(--blue3);font-weight:600;display:inline-flex;align-items:center;gap:5px;margin-top:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Completed</span>`}
+      </div>`;
+    cont.appendChild(div);
+  });
+  updateProgress(key);
+}
+
+function markDone(key, idx) {
+  completedSteps[key].add(idx);
+  renderRoadmap(key);
+  showToast('Step marked complete! Keep going.','success');
+  const pct = Math.round((completedSteps[key].size / RM[key].steps.length) * 100);
+  const i = idx;
+  const t = i < 5 ? i : 4;
+  setToolProgress(t, Math.min(pct + 10, 100));
+}
+
+function updateProgress(key) {
+  const total = RM[key].steps.length;
+  const done = completedSteps[key].size;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('rmPct').textContent = pct + '%';
+  document.getElementById('rmProgressFill').style.width = pct + '%';
+}
+
+function setToolProgress(idx, val) {
+  const el = document.getElementById('pb'+idx);
+  const lb = document.getElementById('tp'+idx);
+  if (el) el.style.width = val + '%';
+  if (lb) lb.textContent = val + '%';
+}
+
+// ─── JOBS FILTER ───
+function filterJobs(btn, type) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.job-card').forEach(c => {
+    if (type === 'all') { c.style.display = 'flex'; return; }
+    const t = c.dataset.type || '';
+    c.style.display = t.includes(type) ? 'flex' : 'none';
+  });
+}
+
+// ─── MODALS ───
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) { m.classList.remove('open'); document.body.style.overflow=''; } });
+});
+
+// ─── APPLY MODAL ───
+function openApply(title, co) {
+  document.getElementById('applyJobTitle').textContent = title;
+  document.getElementById('applyJobCo').textContent = co;
+  document.getElementById('applyForm').style.display = 'block';
+  document.getElementById('applySuccess').classList.remove('on');
+  document.getElementById('applyFooter').style.display = 'flex';
+  openModal('applyModal');
+}
+function submitApplication() {
+  const n = document.getElementById('apName').value.trim();
+  const e = document.getElementById('apEmail').value.trim();
+  if (!n || !e) { showToast('Please fill in your name and email.','error'); return; }
+  document.getElementById('applyForm').style.display = 'none';
+  document.getElementById('applyFooter').style.display = 'none';
+  document.getElementById('applySuccess').classList.add('on');
+  showToast('Application submitted successfully!','success');
+}
+
+// ─── BOOKING MODAL ───
+function openBooking(name, role) {
+  document.getElementById('bookMentorName').textContent = 'Book with ' + name;
+  document.getElementById('bookMentorRole').textContent = role;
+  document.getElementById('bookingForm').style.display = 'block';
+  document.getElementById('bookingSuccess').classList.remove('on');
+  document.getElementById('mentorFooter').style.display = 'flex';
+  openModal('mentorModal');
+}
+function submitBooking() {
+  const n = document.getElementById('bkName').value.trim();
+  const e = document.getElementById('bkEmail').value.trim();
+  if (!n || !e) { showToast('Please fill in your name and email.','error'); return; }
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('mentorFooter').style.display = 'none';
+  document.getElementById('bookingSuccess').classList.add('on');
+  showToast('Session booked! Check your email.','success');
+}
+
+// ─── RESUME BUILDER ───
+function generateResume() {
+  const name = document.getElementById('rName').value.trim() || 'Your Name';
+  const path = document.getElementById('rPath').value;
+  const level = document.getElementById('rLevel').value;
+  const skills = document.getElementById('rSkills').value.trim() || 'Python, SQL, React';
+  const summary = document.getElementById('rSummary').value.trim() || 'Motivated recent graduate seeking entry-level opportunities.';
+  const feedback = document.getElementById('resumeFeedback');
+  const feedbackText = document.getElementById('resumeFeedbackText');
+  
+  setToolProgress(0, 65);
+  const tips = [
+    `Strong opening: Tailor the summary to mention "${path}" explicitly.`,
+    `Keyword optimization: The skills listed (${skills.split(',').slice(0,2).join(', ')}) match current recruiter searches.`,
+    `Action verbs: Start every bullet point with a strong action verb (Built, Developed, Analyzed, Designed).`,
+    `${level === 'Fresh Graduate' ? 'For fresh graduates: include academic projects and any relevant coursework.' : 'Quantify your impact — use numbers wherever possible (e.g. "reduced load time by 40%").'}`,
+    `ATS tip: Avoid tables, images, or text boxes in your final PDF export — they confuse ATS parsers.`
+  ];
+  feedbackText.innerHTML = tips.map(t => `<div style="margin-bottom:7px;padding-left:12px;border-left:2px solid var(--blue);color:var(--text)">— ${t}</div>`).join('');
+  feedback.classList.add('on');
+  showToast('Resume feedback generated!','success');
+}
+
+// ─── MOCK INTERVIEW ───
+const interviewQs = {
+  'Junior Software Engineer':{behavioral:['Tell me about a time you solved a difficult technical problem.','Describe a project you built from scratch. What was your process?','How do you handle debugging when you\'re completely stuck?'],technical:['Explain the difference between REST and GraphQL APIs.','What is time complexity and why does it matter? Give an example.','Walk me through how you\'d design a URL shortener like bit.ly.']},
+  'Data Analyst':{behavioral:['Tell me about a time you turned messy data into a clear insight.','How do you present data findings to non-technical stakeholders?','Describe a time you found a data error — how did you handle it?'],technical:['Write a SQL query to find the top 5 customers by total purchase value.','What\'s the difference between a LEFT JOIN and an INNER JOIN?','How would you handle missing data in a dataset?']},
+  default:{behavioral:['Tell me about yourself and why you\'re interested in this role.','Where do you see yourself in 3 years?','What\'s your biggest professional strength?'],technical:['Walk me through how you approach a new task or project.','How do you prioritize multiple deadlines at once?','What tools or software are you most comfortable with?']}
+};
+
+function startInterview() {
+  const role = document.getElementById('iRole').value;
+  const type = document.getElementById('iType').value;
+  const isBehavioral = type.includes('Behavioral');
+  const key = role.includes('Software') ? 'Junior Software Engineer' : (role.includes('Data') ? 'Data Analyst' : 'default');
+  const qs = interviewQs[key][isBehavioral ? 'behavioral' : 'technical'];
+  const answers = ['Be specific and use the STAR method: Situation, Task, Action, Result. Keep answers to 2–3 minutes.','Draw on real projects or coursework. Mention what you learned from challenges.','Show enthusiasm for continuous learning and professional growth.'];
+  const qa = document.getElementById('iQA');
+  qa.innerHTML = qs.map((q,i) => `<div class="iq-item">
+    <div class="iq-q">Q${i+1}</div>
+    <div class="iq-a" style="font-weight:600;color:var(--white);margin-bottom:8px">${q}</div>
+    <div class="iq-a" style="color:var(--muted2);font-size:0.83rem">${answers[i] || answers[0]}</div>
+    <div class="score-row"><span class="score-dot"></span><span class="score-label">Tip: Structure your answer</span><span class="score-val">STAR Method</span></div>
+  </div>`).join('');
+  document.getElementById('interviewSetup').style.display = 'none';
+  document.getElementById('interviewQuestions').style.display = 'block';
+  setToolProgress(1, 70);
+  showToast('Practice session started!','success');
+}
+
+function resetInterview() {
+  document.getElementById('interviewSetup').style.display = 'block';
+  document.getElementById('interviewQuestions').style.display = 'none';
+}
+
+// ─── LINKEDIN OPTIMIZER ───
+function optimizeLinkedIn() {
+  const headline = document.getElementById('liHeadline').value.trim();
+  const field = document.getElementById('liField').value;
+  const results = document.getElementById('liResults');
+  const resultsText = document.getElementById('liResultsText');
+  const suggestions = [
+    `<b>Current headline issue:</b> "${headline || 'your headline'}" doesn't signal value to recruiters.`,
+    `<b>Suggested rewrite:</b> "<em>Aspiring ${field} Professional | ${field.includes('Software') ? 'Python & React' : field.includes('Data') ? 'SQL & Power BI' : 'Figma & UX Research'} | Open to Opportunities</em>"`,
+    `<b>Keywords to add:</b> Include role-specific terms like "${field.includes('Software') ? 'Full-Stack, API, GitHub' : field.includes('Data') ? 'Data-Driven, Analytics, SQL' : 'User-Centered, Wireframing, Design Systems'}" in your About section.`,
+    `<b>Profile strength tip:</b> Add a custom banner image and 3+ skill endorsements for ${field} within the first week.`,
+    `<b>Connection strategy:</b> Connect with 5 professionals working at your target companies per week. Personalize each request.`
+  ];
+  resultsText.innerHTML = suggestions.map(s => `<div style="margin-bottom:9px;padding-left:12px;border-left:2px solid var(--cyan);color:var(--text);font-size:0.83rem">${s}</div>`).join('');
+  results.classList.add('on');
+  setToolProgress(2, 55);
+  showToast('LinkedIn audit complete!','success');
+}
+
+// ─── COVER LETTER ───
+function generateCoverLetter() {
+  const name = document.getElementById('clName').value.trim() || 'Your Name';
+  const job = document.getElementById('clJob').value.trim() || 'the advertised position';
+  const company = document.getElementById('clCompany').value.trim() || 'your company';
+  const jd = document.getElementById('clJD').value.trim();
+  const skills = document.getElementById('clSkills').value.trim() || 'relevant skills and strong work ethic';
+  const letter = `Dear Hiring Manager,
+
+I am writing to express my strong interest in the ${job} role at ${company}. As a motivated and detail-oriented professional, I am confident that my background and passion for continuous growth make me an excellent candidate for this position.
+
+${jd ? `After carefully reviewing your job description, I noticed you are looking for someone who can ${jd.split('.')[0].toLowerCase()}. This aligns directly with my experience and skills.` : ''}
+
+${skills ? `I bring ${skills} to the table. I am a fast learner who thrives in collaborative environments, and I am genuinely excited about the work ${company} does.` : ''}
+
+I would welcome the opportunity to discuss how I can contribute to your team. Thank you for your time and consideration.
+
+Sincerely,
+${name}`;
+  document.getElementById('clResultText').textContent = letter;
+  document.getElementById('clResult').classList.add('on');
+  setToolProgress(4, 80);
+  showToast('Cover letter generated!','success');
+}
+
+// ─── QUIZ ───
+const qA = [];
+const qMap = [
+  {career:'Tech & Software Engineering',icon:`<svg viewBox="0 0 24 24" class="icon-blue"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,desc:"You have the logical thinking and technical curiosity that makes great software engineers. Start with Python or JavaScript, build projects on GitHub, and you could land your first tech job in 6–12 months."},
+  {career:'UX/UI Design',icon:`<svg viewBox="0 0 24 24" class="icon-blue"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>`,desc:"Your visual eye and creative instinct are perfect for UX/UI design. Learn Figma, build 3 case studies, and target product companies like Canva, GCash, and UnionBank."},
+  {career:'Data Analytics',icon:`<svg viewBox="0 0 24 24" class="icon-blue"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,desc:"Your analytical mindset is a natural fit for data roles. Learn Python, SQL, and Power BI, get Google's Data Analytics certificate, and apply to Globe, BDO, and Lazada."},
+  {career:'Digital Marketing',icon:`<svg viewBox="0 0 24 24" class="icon-blue"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,desc:"Your communication skills and creativity are exactly what marketing teams need. Learn SEO, run real ad campaigns, build a personal brand, and apply to agencies and e-commerce brands first."}
+];
+
+function qa(step, ans) {
+  qA[step] = ans;
+  document.querySelectorAll(`#qs${step} .qopt`).forEach((b,i) => b.classList.toggle('sel', i === ans));
+  document.getElementById('qp'+step).classList.add('done');
+  document.getElementById('qLabel').textContent = step < 3 ? `Question ${step+2} of 4` : 'Results';
+  setTimeout(() => {
+    document.getElementById('qs'+step).classList.remove('on');
+    if (step < 3) { document.getElementById('qs'+(step+1)).classList.add('on'); }
+    else {
+      const sc=[0,0,0,0];
+      qA.forEach(a => sc[a]++);
+      const top = sc.indexOf(Math.max(...sc));
+      const r = qMap[top];
+      document.getElementById('rIconEl').innerHTML = r.icon;
+      document.getElementById('rCareer').textContent = r.career;
+      document.getElementById('rDesc').textContent = r.desc;
+      document.getElementById('qResult').classList.add('on');
+    }
+  }, 320);
+}
+
+// ─── TOAST ───
+let toastTimer;
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toastMsg');
+  m.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ─── HELPERS ───
+function scrollTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+
+// ─── NAV SCROLL & ACTIVE ───
+const navEl = document.getElementById('mainNav');
+const sections = ['hero','paths','roadmap','tools','jobs','mentors','quiz'];
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('scrolled', window.scrollY > 30);
+  const pos = window.scrollY + 120;
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (pos >= el.offsetTop && pos < el.offsetTop + el.offsetHeight) {
+      document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+});
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  const m = document.getElementById('mobileMenu');
+  const h = document.getElementById('hamburger');
+  m.classList.toggle('open');
+  const spans = h.querySelectorAll('span');
+  if (m.classList.contains('open')) {
+    spans[0].style.transform = 'translateY(7px) rotate(45deg)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+  } else {
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '';
+    spans[2].style.transform = '';
+  }
+}
+</script>
+</body>
+</html>
